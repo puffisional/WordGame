@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import sys
 from PyQt5.Qt import QWidget, QMainWindow, QApplication
 from ui import mainWindowTemplate
@@ -26,5 +27,7 @@ if __name__ == "__main__":
     w = MainWindow(game)
     w.show()
     
-    app.exec_()
+    a = Speech(u"Nein", "de")
+    a.play(["delay", "0", "repeat", "2"])
     
+    app.exec_()
