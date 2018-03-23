@@ -5,8 +5,9 @@ from PyQt5.Qt import QPainter, QRectF, QRect, QBrush, Qt, QOpenGLContext,\
 
 class GraphicView(QWidget):
     
-    def __init__(self, *args, **kwargs):
-        QWidget.__init__(self, *args, **kwargs)
+    def __init__(self, game):
+        self.game = game
+        QWidget.__init__(self)
         self._init_ui()
     
     def setupUi(self, form):

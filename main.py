@@ -3,9 +3,8 @@ import sys
 from PyQt5.Qt import QWidget, QMainWindow, QApplication
 from ui import mainWindowTemplate
 from classes.guess_word_view import GuessWordView
-from googletrans import Translator
-from google_speech import Speech, SpeechSegment
 from classes.guess_word_game import GuessWordGame
+from classes.insert_word_game import InsertWordGame
 
 class MainWindow(QMainWindow, mainWindowTemplate.Ui_MainWindow):
     
@@ -23,11 +22,8 @@ class MainWindow(QMainWindow, mainWindowTemplate.Ui_MainWindow):
 if __name__ == "__main__":
 
     app = QApplication(sys.argv)
-    game = GuessWordGame("en", "de")
+    game = InsertWordGame("en", "de")
     w = MainWindow(game)
     w.show()
-    
-    a = Speech(u"Nein", "de")
-    a.play(["delay", "0", "repeat", "2"])
     
     app.exec_()

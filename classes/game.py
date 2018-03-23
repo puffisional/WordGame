@@ -1,8 +1,9 @@
 from googletrans import Translator
-import os
 import json
-import time
+import os
 import random
+import time
+from google_speech import Speech
 
 DICT_KNOWN = "Known"
 DICT_UNKNOWN = "Unknown"
@@ -35,20 +36,21 @@ class Game():
                 self.dictionary[dictionary][self.fromLanguage][self.toLanguage] = {}
             self._initWordVector(dictionary)
             
-        self.saveWord("price", DICT_UNKNOWN)
-        print(self.randomWord(DICT_UNKNOWN, self.toLanguage))
-        
     def start(self):
         pass
        
-    def translate(self, text):
-        return self.translator.translate(text, self.toLanguage, self.fromLanguage)
+    def translate(self, text, fromLanguage=None, toLanguage=None):
+        if fromLanguage is None: fromLanguage = self.fromLanguage
+        if toLanguage is None: toLanguage = self.toLanguage
+        return self.translator.translate(text, toLanguage, fromLanguage)
     
     def nextWord(self):
         return "Fuck you"
     
-    def saveWord(self, word, dictionary):
-        self.dictionary[dictionary][self.fromLanguage][self.toLanguage][word] = (self.translate(word).text, time.time())
+    def insertWord(self, word, dictionary, fromLanguage=None, toLanguage=None):
+        if fromLanguage is None: fromLanguage = self.fromLanguage
+        if toLanguage is None: toLanguage = self.toLanguage
+        self.dictionary[dictionary][fromLanguage][toLanguage][word] = (self.translate(word).text, time.time())
         self.updateDictionaryFile()
         
     def updateDictionaryFile(self):
@@ -65,6 +67,11 @@ class Game():
     def evaluate(self, word, quess):
         return word == quess
     
+    def sayWord(self, word, language):
+        voice = Speech(word, language)
+        voice.play(["speed", "1", "pad", "0.5", "0.5"])
+        
     def _initWordVector(self, dictionary):
         vector = list(self.dictionary[dictionary][self.fromLanguage][self.toLanguage].keys())
         self.wordVector = {dictionary:{self.fromLanguage:{self.toLanguage:vector}}}
+    
