@@ -1,7 +1,5 @@
 
-from PyQt5.QtWidgets import QOpenGLWidget
-from PyQt5.Qt import QPainter, QRectF, QRect, QBrush, Qt, QOpenGLContext,\
-    QWidget, QTimer, QPoint
+from PyQt5.Qt import QWidget
 
 class GraphicView(QWidget):
     

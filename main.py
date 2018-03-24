@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 import sys
-from PyQt5.Qt import QWidget, QMainWindow, QApplication
+from PyQt5.Qt import QMainWindow, QApplication
 from ui import mainWindowTemplate
-from classes.guess_word_view import GuessWordView
-from classes.guess_word_game import GuessWordGame
 from classes.insert_word_game import InsertWordGame
+
 
 class MainWindow(QMainWindow, mainWindowTemplate.Ui_MainWindow):
     
@@ -19,6 +18,22 @@ class MainWindow(QMainWindow, mainWindowTemplate.Ui_MainWindow):
         self.graphicsFrame.layout().addWidget(self.game.graphicView)
         self.statusbar.hide()
         
+    def setFromLanguage(self, language):
+        self.game.fromLanguage = language
+        
+    def setToLanguage(self, language):
+        self.game.toLanguage = language
+    
+    def switchLanguage(self):
+        self.game.switchLanguage()
+        
+        fromLanguage = self.wordLanguageSelect.currentText()
+        toLanguage = self.translationLanguageSelect.currentText()
+        
+        self.wordLanguageSelect.setCurrentIndex(self.wordLanguageSelect.findText(toLanguage))
+        self.translationLanguageSelect.setCurrentIndex(self.translationLanguageSelect.findText(fromLanguage))
+
+    
 if __name__ == "__main__":
 
     app = QApplication(sys.argv)

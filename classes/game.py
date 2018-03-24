@@ -2,20 +2,28 @@ from googletrans import Translator
 import json
 import os
 import random
-import time
 from google_speech import Speech
+from PyQt5.Qt import QObject, pyqtSignal
+from threading import Event, Thread
 
 DICT_KNOWN = "Known"
 DICT_UNKNOWN = "Unknown"
 
-class Game():
+
+class Game(QObject):
     
     graphicView = None
     translator = Translator()
     dictionary = None
     dictionaryFile = os.path.join("./", "resources", "dictionary.data")
     
+    onLanguageSwitch = pyqtSignal()
+    onWordTranslated = pyqtSignal(['QString', 'QString'])
+    
     def __init__(self, fromLanguage, toLanguage):
+        QObject.__init__(self)
+        
+        self.voicePlayEvent = Event()
         self.fromLanguage = fromLanguage
         self.toLanguage = toLanguage
         
@@ -38,19 +46,24 @@ class Game():
             
     def start(self):
         pass
-       
+    
     def translate(self, text, fromLanguage=None, toLanguage=None):
         if fromLanguage is None: fromLanguage = self.fromLanguage
         if toLanguage is None: toLanguage = self.toLanguage
-        return self.translator.translate(text, toLanguage, fromLanguage)
+        
+        def _translate():
+            translatedText = self.translator.translate(text, toLanguage, fromLanguage)
+            self.onWordTranslated.emit(text, translatedText.text)
+            
+        Thread(target=_translate).start()
     
     def nextWord(self):
         return "Fuck you"
     
-    def insertWord(self, word, dictionary, fromLanguage=None, toLanguage=None):
+    def insertWord(self, word, translation, dictionary, fromLanguage=None, toLanguage=None):
         if fromLanguage is None: fromLanguage = self.fromLanguage
         if toLanguage is None: toLanguage = self.toLanguage
-        self.dictionary[dictionary][fromLanguage][toLanguage][word] = (self.translate(word).text, time.time())
+        self.dictionary[dictionary][fromLanguage][toLanguage][word] = translation
         self.updateDictionaryFile()
         
     def updateDictionaryFile(self):
@@ -68,10 +81,20 @@ class Game():
         return word == quess
     
     def sayWord(self, word, language):
-        voice = Speech(word, language)
-        voice.play(["speed", "1", "pad", "0.5", "0.5"])
+        if self.voicePlayEvent.isSet(): return
+        
+        def _play():
+            self.voicePlayEvent.set()
+            voice = Speech(word, language)
+            voice.play(["speed", "1", "pad", "0.8", "0.8"])
+            self.voicePlayEvent.clear()
+            
+        Thread(target=_play).start()
         
     def _initWordVector(self, dictionary):
         vector = list(self.dictionary[dictionary][self.fromLanguage][self.toLanguage].keys())
         self.wordVector = {dictionary:{self.fromLanguage:{self.toLanguage:vector}}}
     
+    def switchLanguage(self):
+        self.fromLanguage, self.toLanguage = self.toLanguage, self.fromLanguage
+        self.onLanguageSwitch.emit()

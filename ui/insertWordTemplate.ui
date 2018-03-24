@@ -6,63 +6,68 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>418</width>
-    <height>107</height>
+    <width>923</width>
+    <height>260</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="2" column="0">
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>Dictionary:</string>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="2">
-    <widget class="QComboBox" name="wordLanguageSelect">
+    <widget class="QPushButton" name="playWordButton">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="maximumSize">
       <size>
-       <width>41</width>
+       <width>16777215</width>
        <height>16777215</height>
       </size>
      </property>
-     <item>
-      <property name="text">
-       <string>en</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>sk</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>ja</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>de</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item row="3" column="1">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
+     <property name="text">
+      <string>Play</string>
      </property>
-     <property name="sizeHint" stdset="0">
+     <property name="icon">
+      <iconset resource="../resources/resources.qrc">
+       <normaloff>:/icons/play-button.png</normaloff>:/icons/play-button.png</iconset>
+     </property>
+     <property name="iconSize">
       <size>
        <width>20</width>
-       <height>40</height>
+       <height>20</height>
       </size>
      </property>
-    </spacer>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="translationInput">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="readOnly">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="wordInput">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="placeholderText">
+      <string/>
+     </property>
+    </widget>
    </item>
    <item row="1" column="0">
     <widget class="QLabel" name="label_2">
@@ -71,10 +76,32 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="1">
-    <widget class="QLineEdit" name="translationInput">
-     <property name="readOnly">
-      <bool>false</bool>
+   <item row="1" column="2">
+    <widget class="QPushButton" name="playTranslationButton">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string> Play</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../resources/resources.qrc">
+       <normaloff>:/icons/play-button.png</normaloff>:/icons/play-button.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -88,161 +115,68 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="3">
-    <widget class="QPushButton" name="playTranslationButton">
+   <item row="4" column="1">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Dictionary:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QComboBox" name="dictionarySelect">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="2">
+    <widget class="QPushButton" name="dictionaryAddButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="maximumSize">
       <size>
-       <width>49</width>
+       <width>16777215</width>
        <height>16777215</height>
       </size>
      </property>
      <property name="text">
-      <string>Play</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../resources/resources.qrc">
-       <normaloff>:/icons/play-button.png</normaloff>:/icons/play-button.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>10</width>
-       <height>10</height>
-      </size>
+      <string>Add</string>
      </property>
     </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QLineEdit" name="wordInput">
-     <property name="placeholderText">
-      <string/>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2">
-    <widget class="QComboBox" name="translationLanguageSelect">
-     <property name="maximumSize">
-      <size>
-       <width>41</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <item>
-      <property name="text">
-       <string>de</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>ja</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>sk</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>en</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item row="0" column="3">
-    <widget class="QPushButton" name="playWordButton">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>49</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>Play</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../resources/resources.qrc">
-       <normaloff>:/icons/play-button.png</normaloff>:/icons/play-button.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>10</width>
-       <height>10</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="4" rowspan="2">
-    <widget class="QPushButton" name="pushButton">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../resources/resources.qrc">
-       <normaloff>:/icons/switch-button.png</normaloff>:/icons/switch-button.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>16</width>
-       <height>16</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1" colspan="4">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QComboBox" name="dictionarySelect"/>
-     </item>
-     <item>
-      <widget class="QPushButton" name="dictionaryAddButton">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>50</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Add</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
    </item>
   </layout>
  </widget>
  <tabstops>
   <tabstop>wordInput</tabstop>
-  <tabstop>wordLanguageSelect</tabstop>
   <tabstop>playWordButton</tabstop>
   <tabstop>translationInput</tabstop>
-  <tabstop>translationLanguageSelect</tabstop>
   <tabstop>playTranslationButton</tabstop>
-  <tabstop>dictionarySelect</tabstop>
-  <tabstop>dictionaryAddButton</tabstop>
  </tabstops>
  <resources>
   <include location="../resources/resources.qrc"/>
@@ -255,8 +189,8 @@
    <slot>translateWord()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>161</x>
-     <y>23</y>
+     <x>340</x>
+     <y>45</y>
     </hint>
     <hint type="destinationlabel">
      <x>151</x>
@@ -271,8 +205,8 @@
    <slot>playWord()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>357</x>
-     <y>14</y>
+     <x>685</x>
+     <y>36</y>
     </hint>
     <hint type="destinationlabel">
      <x>417</x>
@@ -287,8 +221,8 @@
    <slot>playTranslation()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>344</x>
-     <y>54</y>
+     <x>685</x>
+     <y>148</y>
     </hint>
     <hint type="destinationlabel">
      <x>417</x>
@@ -303,28 +237,12 @@
    <slot>saveWord()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>371</x>
-     <y>80</y>
+     <x>760</x>
+     <y>223</y>
     </hint>
     <hint type="destinationlabel">
      <x>304</x>
      <y>106</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton</sender>
-   <signal>clicked()</signal>
-   <receiver>Form</receiver>
-   <slot>switchWordInput()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>389</x>
-     <y>44</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>655</x>
-     <y>49</y>
     </hint>
    </hints>
   </connection>

@@ -6,15 +6,9 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>333</width>
-    <height>71</height>
+    <width>1273</width>
+    <height>247</height>
    </rect>
-  </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
   </property>
   <property name="baseSize">
    <size>
@@ -27,9 +21,6 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_3">
-    <property name="sizeConstraint">
-     <enum>QLayout::SetMinimumSize</enum>
-    </property>
     <property name="leftMargin">
      <number>0</number>
     </property>
@@ -93,20 +84,169 @@
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
         <property name="leftMargin">
-         <number>0</number>
+         <number>22</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>22</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>22</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>22</number>
         </property>
         <property name="spacing">
-         <number>0</number>
+         <number>15</number>
         </property>
+        <item row="3" column="2">
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="2">
+         <widget class="QLabel" name="label">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="text">
+           <string>Translate to:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="label_2">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="text">
+           <string>Tanslate from:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="3">
+         <widget class="QComboBox" name="translationLanguageSelect">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="currentIndex">
+           <number>3</number>
+          </property>
+          <item>
+           <property name="text">
+            <string>en</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>sk</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>ja</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>de</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QComboBox" name="wordLanguageSelect">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <item>
+           <property name="text">
+            <string>en</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>sk</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>ja</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>de</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="0" column="4" rowspan="2">
+         <widget class="QPushButton" name="switchLanguageButton">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../resources/resources.qrc">
+            <normaloff>:/icons/switch-button.png</normaloff>:/icons/switch-button.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
      </widget>
@@ -118,13 +258,69 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>333</width>
-     <height>21</height>
+     <width>1273</width>
+     <height>47</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
- <connections/>
+ <resources>
+  <include location="../resources/resources.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>wordLanguageSelect</sender>
+   <signal>currentTextChanged(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setFromLanguage(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>905</x>
+     <y>94</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1043</x>
+     <y>39</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>translationLanguageSelect</sender>
+   <signal>currentTextChanged(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setToLanguage(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>934</x>
+     <y>143</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1043</x>
+     <y>115</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>switchLanguageButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>switchLanguage()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>986</x>
+     <y>106</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1043</x>
+     <y>108</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>setFromLanguage(QString)</slot>
+  <slot>setToLanguage(QString)</slot>
+  <slot>switchLanguage()</slot>
+ </slots>
 </ui>
