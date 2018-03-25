@@ -41,4 +41,9 @@ if __name__ == "__main__":
     w = MainWindow(game)
     w.show()
     
+    for _ in range(10):
+        app.processEvents()
+        
+    w.adjustSize()
+    
     app.exec_()

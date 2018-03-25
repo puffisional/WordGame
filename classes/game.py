@@ -1,10 +1,10 @@
-from googletrans import Translator
 import json
 import os
 import random
 from google_speech import Speech
 from PyQt5.Qt import QObject, pyqtSignal
 from threading import Event, Thread
+from classes.translator import Translator
 
 DICT_KNOWN = "Known"
 DICT_UNKNOWN = "Unknown"
@@ -18,7 +18,7 @@ class Game(QObject):
     dictionaryFile = os.path.join("./", "resources", "dictionary.data")
     
     onLanguageSwitch = pyqtSignal()
-    onWordTranslated = pyqtSignal(['QString', 'QString'])
+    onWordTranslated = pyqtSignal(['QString', 'PyQt_PyObject'])
     
     def __init__(self, fromLanguage, toLanguage):
         QObject.__init__(self)
@@ -52,8 +52,8 @@ class Game(QObject):
         if toLanguage is None: toLanguage = self.toLanguage
         
         def _translate():
-            translatedText = self.translator.translate(text, toLanguage, fromLanguage)
-            self.onWordTranslated.emit(text, translatedText.text)
+            translation = self.translator.translate(text, toLanguage, fromLanguage)
+            self.onWordTranslated.emit(text, translation)
             
         Thread(target=_translate).start()
     
@@ -81,12 +81,12 @@ class Game(QObject):
         return word == quess
     
     def sayWord(self, word, language):
-        if self.voicePlayEvent.isSet(): return
+#         if self.voicePlayEvent.isSet(): return
         
         def _play():
             self.voicePlayEvent.set()
             voice = Speech(word, language)
-            voice.play(["speed", "1", "pad", "0.8", "0.8"])
+            voice.play(["speed", "1", "pad", "1", "1"])
             self.voicePlayEvent.clear()
             
         Thread(target=_play).start()

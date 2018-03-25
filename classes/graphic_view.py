@@ -1,5 +1,6 @@
 
 from PyQt5.Qt import QWidget
+from PyQt5.QtWidgets import QApplication
 
 class GraphicView(QWidget):
     
@@ -13,3 +14,9 @@ class GraphicView(QWidget):
     
     def _init_ui(self):
         self.setupUi(self)
+    
+    def resizeToMinimum(self):
+        for _ in range(10):
+            QApplication.processEvents()
+        
+        self.window().adjustSize()
