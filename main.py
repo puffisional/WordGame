@@ -2,9 +2,9 @@
 import sys
 from PyQt5.Qt import QMainWindow, QApplication
 from ui import mainWindowTemplate
-from classes.insert_word_game import InsertWordGame
+from WordGame.classes.insert_word_game import InsertWordGame
 from PyQt5.QtWidgets import QErrorMessage
-
+from WordGame.classes.text_translate_game import TextTranslateGame
 
 class MainWindow(QMainWindow, mainWindowTemplate.Ui_MainWindow):
     
@@ -44,7 +44,8 @@ class MainWindow(QMainWindow, mainWindowTemplate.Ui_MainWindow):
 if __name__ == "__main__":
 
     app = QApplication(sys.argv)
-    game = InsertWordGame("en", "de")
+    game = TextTranslateGame("en", "de")
+#     game = InsertWordGame("en", "de")
     w = MainWindow(game)
     w.show()
     

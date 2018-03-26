@@ -21,10 +21,23 @@ class Translated():
                 self.translations.append((d[0], ["%s %s" % (d[2][0][-1], w) for w in d[1]]))
             else:
                 self.translations.append((d[0], d[1]))
+
+class TranslatedSentence():
+    
+    sentences = None
+    translations = None
+    
+    def __init__(self, dest, data):
+        self.sentences = [] #data[0][0][1]
+        self.translations = [] #data[0][0][0]
+        
+        for d in data[0]:
+            self.sentences.append(d[1])
+            self.translations.append(d[0])
         
 class Translator(googleTranslator):
     
-    def translate(self, text, dest='en', src='auto'):
+    def translate(self, text, dest='en', src='auto', translationClass=Translated):
         dest = dest.lower().split('_', 1)[0]
         src = src.lower().split('_', 1)[0]
 
@@ -85,8 +98,9 @@ class Translator(googleTranslator):
                 
         # put final values into a new Translated object
         try:
-            result = Translated(dest, data)
-        except:
+            result = translationClass(dest, data)
+        except Exception as e:
+            print(e)
             return None
         
         return result

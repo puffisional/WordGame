@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1510</width>
+    <height>688</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QPlainTextEdit" name="textToTranslateInput">
+     <property name="documentTitle">
+      <string/>
+     </property>
+     <property name="placeholderText">
+      <string>Text to translate</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QPlainTextEdit" name="translatedTextInput">
+     <property name="documentTitle">
+      <string/>
+     </property>
+     <property name="placeholderText">
+      <string>Translated text</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="startButton">
+       <property name="text">
+        <string>Start</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pauseButton">
+       <property name="text">
+        <string>Pause</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="stopButton">
+       <property name="text">
+        <string>Stop</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="previousSentenceButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>&lt;&lt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="previousWordButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>&lt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="nextWordButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="nextSentenceButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>&gt;&gt;</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="3" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="resetButton">
+       <property name="text">
+        <string>Reset</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="translateAllButton">
+       <property name="text">
+        <string>Trnaslate all</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>resetButton</sender>
+   <signal>clicked()</signal>
+   <receiver>textToTranslateInput</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1213</x>
+     <y>644</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>897</x>
+     <y>109</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>resetButton</sender>
+   <signal>clicked()</signal>
+   <receiver>translatedTextInput</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1229</x>
+     <y>640</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1195</x>
+     <y>495</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>translateAllButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>translateAll()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1401</x>
+     <y>634</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1406</x>
+     <y>829</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>startButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>startTranslation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>148</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-77</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pauseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>pauseTranslation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>343</x>
+     <y>303</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-48</x>
+     <y>264</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stopButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>stopTranslation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>516</x>
+     <y>290</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>541</x>
+     <y>-117</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>nextSentenceButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>translateNextSentence()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1437</x>
+     <y>300</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1809</x>
+     <y>317</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>nextWordButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>translateNextWord()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1320</x>
+     <y>305</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1665</x>
+     <y>483</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>previousWordButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>translatePreviousWord()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1187</x>
+     <y>315</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1738</x>
+     <y>556</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>previousSentenceButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>translatePreviousSentence()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1070</x>
+     <y>304</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1324</x>
+     <y>832</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>translateAll()</slot>
+  <slot>startTranslation()</slot>
+  <slot>pauseTranslation()</slot>
+  <slot>stopTranslation()</slot>
+  <slot>translateNextWord()</slot>
+  <slot>translateNextSentence()</slot>
+  <slot>translatePreviousWord()</slot>
+  <slot>translatePreviousSentence()</slot>
+ </slots>
+</ui>

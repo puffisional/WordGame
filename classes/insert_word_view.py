@@ -29,6 +29,8 @@ class InsertWordView(Ui_Form, GraphicView):
     @pyqtSlot()
     def translateWord(self):
         word = self.wordInput.text()
+        if word == "": return
+        
         self.game.translate(word)
     
     @pyqtSlot()   
