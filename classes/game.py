@@ -9,7 +9,7 @@ from classes.translator import Translator, TranslatedSentence
 DICT_KNOWN = "Known"
 DICT_UNKNOWN = "Unknown"
 
-Speech.MAX_SEGMENT_SIZE = 1000
+Speech.MAX_SEGMENT_SIZE = 200
 
 class Game(QObject):
     
