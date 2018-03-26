@@ -5,6 +5,7 @@ from google_speech import Speech
 from PyQt5.Qt import QObject, pyqtSignal
 from threading import Event, Thread
 from classes.translator import Translator
+from PyQt5.QtWidgets import QErrorMessage
 
 DICT_KNOWN = "Known"
 DICT_UNKNOWN = "Unknown"
@@ -19,6 +20,7 @@ class Game(QObject):
     
     onLanguageSwitch = pyqtSignal()
     onWordTranslated = pyqtSignal(['QString', 'PyQt_PyObject'])
+    onError = pyqtSignal(['QString'])
     
     def __init__(self, fromLanguage, toLanguage):
         QObject.__init__(self)
@@ -53,12 +55,12 @@ class Game(QObject):
         
         def _translate():
             translation = self.translator.translate(text, toLanguage, fromLanguage)
-            self.onWordTranslated.emit(text, translation)
+            if translation is not None:
+                self.onWordTranslated.emit(text, translation)
+            else:
+                self.onError.emit("Translation error")
             
         Thread(target=_translate).start()
-    
-    def nextWord(self):
-        return "Fuck you"
     
     def insertWord(self, word, translation, dictionary, fromLanguage=None, toLanguage=None):
         if fromLanguage is None: fromLanguage = self.fromLanguage
@@ -81,7 +83,6 @@ class Game(QObject):
         return word == quess
     
     def sayWord(self, word, language):
-#         if self.voicePlayEvent.isSet(): return
         
         def _play():
             self.voicePlayEvent.set()

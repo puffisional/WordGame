@@ -3,6 +3,7 @@ import sys
 from PyQt5.Qt import QMainWindow, QApplication
 from ui import mainWindowTemplate
 from classes.insert_word_game import InsertWordGame
+from PyQt5.QtWidgets import QErrorMessage
 
 
 class MainWindow(QMainWindow, mainWindowTemplate.Ui_MainWindow):
@@ -15,9 +16,15 @@ class MainWindow(QMainWindow, mainWindowTemplate.Ui_MainWindow):
     def _init_ui(self):
         self.setupUi(self)
         
+        self.errorDialog = QErrorMessage(self.window())
         self.graphicsFrame.layout().addWidget(self.game.graphicView)
         self.statusbar.hide()
         
+        self.game.onError.connect(self.showError)
+    
+    def showError(self, message):
+        self.errorDialog.showMessage(message)
+    
     def setFromLanguage(self, language):
         self.game.fromLanguage = language
         

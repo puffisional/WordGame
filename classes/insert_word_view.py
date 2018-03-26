@@ -10,6 +10,8 @@ from PyQt5 import QtCore
 
 class InsertWordView(Ui_Form, GraphicView):
     
+    lastTranslation = None
+    
     def __init__(self, game):
         self.translatedWordWidgets = []
         GraphicView.__init__(self, game)
@@ -19,8 +21,8 @@ class InsertWordView(Ui_Form, GraphicView):
         
         self.dictionaryWidgets = (self.dictionaryLabel, self.dictionarySelect, self.dictionaryAddButton)
         self.dictionarySelect.addItems(self.game.dictionary.keys())
-        self.game.onLanguageSwitch.connect(self.onLanguageSwitch)
         self.game.onWordTranslated.connect(self.onWordTranslated)
+        self.game.onError.connect(self.gameError)
         
         self.resizeToMinimum()
     
@@ -40,25 +42,16 @@ class InsertWordView(Ui_Form, GraphicView):
     
     @pyqtSlot()
     def saveWord(self):
-        word = self.wordInput.text()
-        translation = self.translationInput.text()
+        word, translation = self.lastTranslation
         dictionary = self.dictionarySelect.currentText()
-        self.game.insertWord(word, translation, dictionary)
-    
-    @pyqtSlot()
-    def onLanguageSwitch(self):
-        return
-        word = self.wordInput.text()
-        translation = self.translationInput.text()
-        
-        self.translationInput.setText(word)
-        self.wordInput.setText(translation)
+        self.game.insertWord(word, translation.translations[0][1][0], dictionary)
     
     @pyqtSlot('QString', 'PyQt_PyObject')   
     def onWordTranslated(self, word, translation):
         for widgets in self.translatedWordWidgets:
             for widget in widgets: widget.setParent(None)
-            
+        
+        self.lastTranslation = (word, translation)   
         self.translatedWordWidgets = []
         
         row = 2
@@ -68,6 +61,9 @@ class InsertWordView(Ui_Form, GraphicView):
         
         self._moveDictionaryWidgets(row + 1)
         self.resizeToMinimum()
+    
+    def gameError(self, message):
+        self.wordInput.setText("")
     
     def _addTranslatedWord(self, row, wordType, translations):
         label = QLabel("%s:" % wordType)
@@ -81,12 +77,13 @@ class InsertWordView(Ui_Form, GraphicView):
         for translatedWord in translations[:5]:
             wordButton = QPushButton(translatedWord)
             wordButton.setSizePolicy(sizePolicy)
-            inputTranslation.layout().addWidget(wordButton)
             wordButton.clicked.connect(lambda event, word=translatedWord: self.playTranslation(word))
+            inputTranslation.layout().addWidget(wordButton)
                 
         self.layout().addWidget(label, row, 0)
         self.layout().addWidget(inputTranslation, row, 1, 1, 2)
         
+        wordButton.setFocus()
         self.translatedWordWidgets.append((label, inputTranslation))
         
     def _moveDictionaryWidgets(self, row):
