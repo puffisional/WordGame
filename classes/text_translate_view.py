@@ -1,5 +1,4 @@
 from classes.graphic_view import GraphicView
-from PyQt5.QtWidgets import QPushButton
 from WordGame.ui.textTranslateTemplate import Ui_Form
 from PyQt5.QtGui import QTextCursor
 import re
