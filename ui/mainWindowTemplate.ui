@@ -164,11 +164,16 @@
            </size>
           </property>
           <property name="currentIndex">
-           <number>3</number>
+           <number>4</number>
           </property>
           <item>
            <property name="text">
             <string>en</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>it</string>
            </property>
           </item>
           <item>
@@ -205,6 +210,11 @@
           <item>
            <property name="text">
             <string>en</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>it</string>
            </property>
           </item>
           <item>
@@ -276,8 +286,8 @@
    <slot>setFromLanguage(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>905</x>
-     <y>94</y>
+     <x>1173</x>
+     <y>108</y>
     </hint>
     <hint type="destinationlabel">
      <x>1043</x>
@@ -292,8 +302,8 @@
    <slot>setToLanguage(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>934</x>
-     <y>143</y>
+     <x>1173</x>
+     <y>162</y>
     </hint>
     <hint type="destinationlabel">
      <x>1043</x>
@@ -308,8 +318,8 @@
    <slot>switchLanguage()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>986</x>
-     <y>106</y>
+     <x>1249</x>
+     <y>162</y>
     </hint>
     <hint type="destinationlabel">
      <x>1043</x>

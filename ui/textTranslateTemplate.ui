@@ -16,6 +16,9 @@
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <widget class="QPlainTextEdit" name="textToTranslateInput">
+     <property name="styleSheet">
+      <string notr="true">    QTextEdit { selection-background-color: darkblue }</string>
+     </property>
      <property name="documentTitle">
       <string/>
      </property>
@@ -26,6 +29,9 @@
    </item>
    <item row="2" column="0">
     <widget class="QPlainTextEdit" name="translatedTextInput">
+     <property name="styleSheet">
+      <string notr="true">    QTextEdit { selection-background-color: darkblue }</string>
+     </property>
      <property name="documentTitle">
       <string/>
      </property>
@@ -54,6 +60,16 @@
       <widget class="QPushButton" name="stopButton">
        <property name="text">
         <string>Stop</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="readOriginalCheckbox">
+       <property name="text">
+        <string>Read original</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
        </property>
       </widget>
      </item>

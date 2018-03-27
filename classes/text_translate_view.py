@@ -1,6 +1,8 @@
 from classes.graphic_view import GraphicView
 from PyQt5.QtWidgets import QPushButton
 from WordGame.ui.textTranslateTemplate import Ui_Form
+from PyQt5.QtGui import QTextCursor
+import re
 
 ACTION_TRANSLATE_ALL = 0
 ACTION_START_TRANSLATION = 1
@@ -16,8 +18,14 @@ class TextTranslateView(Ui_Form, GraphicView):
         self.game.onSentenceTranslated.connect(self.onSentenceTranslated)
         self.game.onSentenceStepPlay.connect(self.setStepSentenceTranslation)
     
-    def setStepSentenceTranslation(self, sentence):
+    def setStepSentenceTranslation(self, sentence, sentenceStart, sentenceEnd):
         self.translatedTextInput.setPlainText(sentence)
+        
+        cursor = self.textToTranslateInput.textCursor()
+        cursor.setPosition(sentenceStart)
+        cursor.setPosition(sentenceEnd, QTextCursor.KeepAnchor)
+        self.textToTranslateInput.setTextCursor(cursor)
+        self.textToTranslateInput.setFocus()
     
     def translateAll(self):
         self.currentAction = ACTION_TRANSLATE_ALL
@@ -29,10 +37,12 @@ class TextTranslateView(Ui_Form, GraphicView):
     
     def startTranslation(self):
         self.currentAction = ACTION_START_TRANSLATION
-        
-        inputText = self.textToTranslateInput.toPlainText()
+        inputText = re.split("\.+|\?+|\!+|;+", self.textToTranslateInput.toPlainText())
+        inputText = ".\n".join([sentence.strip() for sentence in inputText])
+        self.textToTranslateInput.setPlainText(inputText.strip())
         if inputText == '': return
         
+        self.game.readOriginalFlag = self.readOriginalCheckbox.isChecked()
         self.game.translateSentence(inputText)
        
     def onSentenceTranslated(self, sentence, translation):
@@ -42,7 +52,7 @@ class TextTranslateView(Ui_Form, GraphicView):
             self.game.startStepTranslation(translation)
 
     def stopTranslation(self):
-        pass
+        self.game.stopStepTranslation()
     
     def pauseTranslation(self):
         pass

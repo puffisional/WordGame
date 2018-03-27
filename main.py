@@ -6,6 +6,7 @@ from WordGame.classes.insert_word_game import InsertWordGame
 from PyQt5.QtWidgets import QErrorMessage
 from WordGame.classes.text_translate_game import TextTranslateGame
 
+
 class MainWindow(QMainWindow, mainWindowTemplate.Ui_MainWindow):
     
     def __init__(self, game):
