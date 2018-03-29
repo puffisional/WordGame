@@ -5,6 +5,7 @@ from ui import mainWindowTemplate
 from WordGame.classes.insert_word_game import InsertWordGame
 from PyQt5.QtWidgets import QErrorMessage
 from WordGame.classes.text_translate_game import TextTranslateGame
+from classes.dictionary_edit_game import DictionaryEditGame
 
 
 class MainWindow(QMainWindow, mainWindowTemplate.Ui_MainWindow):
@@ -13,7 +14,8 @@ class MainWindow(QMainWindow, mainWindowTemplate.Ui_MainWindow):
         QMainWindow.__init__(self)
         self.games = [
             InsertWordGame("en", "de"),
-            TextTranslateGame("en", "de")
+            TextTranslateGame("en", "de"),
+            DictionaryEditGame("en", "de"),
             ]
         
         self.game = self.games[0]

@@ -136,6 +136,7 @@ class Ui_MainWindow(object):
         self.comboBox.setObjectName("comboBox")
         self.comboBox.addItem("")
         self.comboBox.addItem("")
+        self.comboBox.addItem("")
         self.gridLayout_2.addWidget(self.comboBox, 3, 2, 1, 2)
         self.gridLayout_3.addWidget(self.splitter, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
@@ -173,5 +174,6 @@ class Ui_MainWindow(object):
         self.label_3.setText(_translate("MainWindow", "View:"))
         self.comboBox.setItemText(0, _translate("MainWindow", "Vocabulary"))
         self.comboBox.setItemText(1, _translate("MainWindow", "Text translator"))
+        self.comboBox.setItemText(2, _translate("MainWindow", "Dictionary edit"))
 
 import resources_rc

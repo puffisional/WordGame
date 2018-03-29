@@ -307,6 +307,11 @@
             <string>Text translator</string>
            </property>
           </item>
+          <item>
+           <property name="text">
+            <string>Dictionary edit</string>
+           </property>
+          </item>
          </widget>
         </item>
        </layout>

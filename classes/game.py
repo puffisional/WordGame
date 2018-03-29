@@ -24,6 +24,8 @@ class Game(QObject):
     onSentenceTranslated = pyqtSignal(['QString', 'PyQt_PyObject'])
     onTranslationEnd = pyqtSignal()
     onError = pyqtSignal(['QString'])
+    onDictionaryAdd = pyqtSignal(['QString'])
+    onDictionaryRemove = pyqtSignal(['QString'])
     
     def __init__(self, fromLanguage, toLanguage):
         QObject.__init__(self)
@@ -121,6 +123,28 @@ class Game(QObject):
         vector = list(self.dictionary[dictionary][self.fromLanguage][self.toLanguage].keys())
         self.wordVector = {dictionary:{self.fromLanguage:{self.toLanguage:vector}}}
     
+    def getWords(self, dictionary, fromLanguage=None, toLanguage=None):
+        if fromLanguage is None: fromLanguage = self.fromLanguage
+        if toLanguage is None: toLanguage = self.toLanguage
+        
+        return self.dictionary[dictionary][fromLanguage][toLanguage]
+    
     def switchLanguage(self):
         self.fromLanguage, self.toLanguage = self.toLanguage, self.fromLanguage
         self.onLanguageSwitch.emit()
+
+    def addDictionary(self, dictionary):
+        if self.dictionary.get(dictionary) is None:
+            self.dictionary[dictionary] = {}
+            self.dictionary[dictionary][self.fromLanguage] = {}
+            self.dictionary[dictionary][self.fromLanguage][self.toLanguage] = {}
+                
+            self.updateDictionaryFile()
+            self.onDictionaryAdd.emit(dictionary)
+    
+    def removeDictionary(self, dictionary):
+        if self.dictionary.get(dictionary) is None: return
+        
+        del self.dictionary[dictionary][self.fromLanguage]
+        self.onDictionaryRemove.emit(dictionary)
+        self.updateDictionaryFile()
