@@ -6,17 +6,20 @@ from WordGame.classes.insert_word_game import InsertWordGame
 from PyQt5.QtWidgets import QErrorMessage
 from WordGame.classes.text_translate_game import TextTranslateGame
 from classes.dictionary_edit_game import DictionaryEditGame
+from classes.game import Game
+from classes.language_dictionary import LanguageDictionary
+import os
 
 
 class MainWindow(QMainWindow, mainWindowTemplate.Ui_MainWindow):
     
     def __init__(self):
         QMainWindow.__init__(self)
-        self.games = [
-            InsertWordGame("en", "de"),
-            TextTranslateGame("en", "de"),
-            DictionaryEditGame("en", "de"),
-            ]
+        
+        self.languageDictionary = LanguageDictionary(os.path.join("./", "resources", "dictionary.data"), "en", "de")
+        self.games = [InsertWordGame(self.languageDictionary),
+                      TextTranslateGame(self.languageDictionary),
+                      DictionaryEditGame(self.languageDictionary)]
         
         self.game = self.games[0]
         self._init_ui()
@@ -35,10 +38,10 @@ class MainWindow(QMainWindow, mainWindowTemplate.Ui_MainWindow):
         self.errorDialog.showMessage(message)
     
     def setFromLanguage(self, language):
-        self.game.fromLanguage = language
+        self.game.setFromLanguage(language)
         
     def setToLanguage(self, language):
-        self.game.toLanguage = language
+        self.game.setToLanguage(language)
     
     def switchLanguage(self):
         self.game.switchLanguage()
@@ -59,7 +62,8 @@ class MainWindow(QMainWindow, mainWindowTemplate.Ui_MainWindow):
         for _ in range(10):
             app.processEvents()
         
-        self.adjustSize()
+#         self.adjustSize()
+
     
 if __name__ == "__main__":
 

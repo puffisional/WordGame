@@ -3,6 +3,7 @@ from classes.text_translate_view import TextTranslateView
 from threading import Thread
 from PyQt5.Qt import pyqtSignal
 from threading import Event
+from classes.language_dictionary import DICT_UNKNOWN
 
 
 class TextTranslateGame(Game):
@@ -11,8 +12,8 @@ class TextTranslateGame(Game):
     stopEvent = Event()
     readOriginalFlag = True
     
-    def __init__(self, fromLanguage, toLanguage):
-        Game.__init__(self, fromLanguage, toLanguage)
+    def __init__(self, dictionary):
+        Game.__init__(self, dictionary)
         
         self.graphicView = TextTranslateView(self)
         
@@ -35,10 +36,16 @@ class TextTranslateGame(Game):
                 self.onSentenceStepPlay.emit(translation, sentenceStart, sentenceEnd)
                 
                 if self.readOriginalFlag:
-                    self.sayWord(sentence, self.fromLanguage, blocking=True)
+                    self.sayWord(sentence, self.fromLanguage(), blocking=True)
                     
                 if self.stopEvent.isSet(): break
-                self.sayWord(translation, self.toLanguage, blocking=True)
+                self.sayWord(translation, self.toLanguage(), blocking=True)
+                
+                for word in sentence.split():
+                    translation = self.translate(word, blocking=True)
+                    if translation is None: continue
+                    
+                    self.insertWord(word, translation.translations[0][1][0], DICT_UNKNOWN)
                 
             self.stopEvent.clear()
         

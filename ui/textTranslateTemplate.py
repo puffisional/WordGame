@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(1510, 688)
+        Form.resize(1688, 688)
         self.gridLayout = QtWidgets.QGridLayout(Form)
         self.gridLayout.setObjectName("gridLayout")
         self.textToTranslateInput = QtWidgets.QPlainTextEdit(Form)
@@ -39,6 +39,10 @@ class Ui_Form(object):
         self.readOriginalCheckbox.setChecked(True)
         self.readOriginalCheckbox.setObjectName("readOriginalCheckbox")
         self.horizontalLayout.addWidget(self.readOriginalCheckbox)
+        self.translateWordsCheckbox = QtWidgets.QCheckBox(Form)
+        self.translateWordsCheckbox.setChecked(True)
+        self.translateWordsCheckbox.setObjectName("translateWordsCheckbox")
+        self.horizontalLayout.addWidget(self.translateWordsCheckbox)
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.previousSentenceButton = QtWidgets.QPushButton(Form)
@@ -112,6 +116,7 @@ class Ui_Form(object):
         self.pauseButton.setText(_translate("Form", "Pause"))
         self.stopButton.setText(_translate("Form", "Stop"))
         self.readOriginalCheckbox.setText(_translate("Form", "Read original"))
+        self.translateWordsCheckbox.setText(_translate("Form", "Translate words"))
         self.previousSentenceButton.setText(_translate("Form", "<<"))
         self.previousWordButton.setText(_translate("Form", "<"))
         self.nextWordButton.setText(_translate("Form", ">"))

@@ -1,22 +1,17 @@
-import json
-import os
 import random
 from google_speech import Speech
 from PyQt5.Qt import QObject, pyqtSignal
 from threading import Event, Thread
 from classes.translator import Translator, TranslatedSentence
-
-DICT_KNOWN = "Known"
-DICT_UNKNOWN = "Unknown"
+from builtins import isinstance
 
 Speech.MAX_SEGMENT_SIZE = 200
+
 
 class Game(QObject):
     
     graphicView = None
     translator = Translator()
-    dictionary = None
-    dictionaryFile = os.path.join("./", "resources", "dictionary.data")
     
     onLanguageSwitch = pyqtSignal()
     onTranslationStart = pyqtSignal()
@@ -26,37 +21,20 @@ class Game(QObject):
     onError = pyqtSignal(['QString'])
     onDictionaryAdd = pyqtSignal(['QString'])
     onDictionaryRemove = pyqtSignal(['QString'])
+    onWordMove = pyqtSignal(['PyQt_PyObject', 'QString', 'QString', 'QString', 'QString'])
     
-    def __init__(self, fromLanguage, toLanguage):
+    def __init__(self, dictionary):
         QObject.__init__(self)
         
         self.voicePlayEvent = Event()
-        self.fromLanguage = fromLanguage
-        self.toLanguage = toLanguage
-        
-        if not os.path.exists(self.dictionaryFile):
-            self.dictionary = {
-                DICT_KNOWN:{},
-                DICT_UNKNOWN:{},
-                }
-            self.updateDictionaryFile()
-        else:
-            with open(self.dictionaryFile, "r") as fp:
-                self.dictionary = json.load(fp)
-        
-        for dictionary in self.dictionary.keys():
-            if self.fromLanguage not in self.dictionary[dictionary]:
-                self.dictionary[dictionary][self.fromLanguage] = {}
-            if self.toLanguage not in self.dictionary[dictionary][self.fromLanguage]:
-                self.dictionary[dictionary][self.fromLanguage][self.toLanguage] = {}
-            self._initWordVector(dictionary)
+        self.dictionary = dictionary
             
     def start(self):
         pass
     
-    def translate(self, word, fromLanguage=None, toLanguage=None):
-        if fromLanguage is None: fromLanguage = self.fromLanguage
-        if toLanguage is None: toLanguage = self.toLanguage
+    def translate(self, word, fromLanguage=None, toLanguage=None, blocking=False):
+        if fromLanguage is None: fromLanguage = self.fromLanguage()
+        if toLanguage is None: toLanguage = self.toLanguage()
         
         def _translate():
             self.onTranslationStart.emit()
@@ -66,12 +44,16 @@ class Game(QObject):
             else:
                 self.onError.emit("Translation error")
             self.onTranslationEnd.emit()
-            
-        Thread(target=_translate).start()
+            return translation
+        
+        if not blocking:       
+            Thread(target=_translate).start()
+        else: 
+            return _translate()   
     
     def translateSentence(self, sentence, fromLanguage=None, toLanguage=None, blocking=False):
-        if fromLanguage is None: fromLanguage = self.fromLanguage
-        if toLanguage is None: toLanguage = self.toLanguage
+        if fromLanguage is None: fromLanguage = self.fromLanguage()
+        if toLanguage is None: toLanguage = self.toLanguage()
         
         def _translate():
             self.onTranslationStart.emit()
@@ -81,33 +63,31 @@ class Game(QObject):
             else:
                 self.onError.emit("Translation error")
             self.onTranslationEnd.emit()
+            return translation
         
         if not blocking:       
             Thread(target=_translate).start()
-        else: _translate()
+        else: 
+            return _translate()   
     
     def insertWord(self, word, translation, dictionary, fromLanguage=None, toLanguage=None):
-        if fromLanguage is None: fromLanguage = self.fromLanguage
-        if toLanguage is None: toLanguage = self.toLanguage
-        self.dictionary[dictionary][fromLanguage][toLanguage][word] = translation
-        self.updateDictionaryFile()
+        if fromLanguage is None: fromLanguage = self.fromLanguage()
+        if toLanguage is None: toLanguage = self.toLanguage()
         
-    def updateDictionaryFile(self):
-        with open(self.dictionaryFile, "w+") as fp:
-            json.dump(self.dictionary, fp)
-    
+        self.dictionary[dictionary][fromLanguage][toLanguage][word] = translation
+        self.dictionary.updateFile()
+        
     def randomWord(self, dictionary, language):
-        fromWord = random.choice(self.wordVector[dictionary][self.fromLanguage][self.toLanguage])
-        if language == self.fromLanguage:
+        fromWord = random.choice(self.wordVector[dictionary][self.fromLanguage()][self.toLanguage()])
+        if language == self.fromLanguage():
             return fromWord
         else:
-            return self.dictionary[dictionary][self.fromLanguage][self.toLanguage][fromWord][0]
+            return self.dictionary[dictionary][self.fromLanguage()][self.toLanguage()][fromWord][0]
     
     def evaluate(self, word, quess):
         return word == quess
     
     def sayWord(self, word, language, blocking=False):
-        
         def _play():
             self.voicePlayEvent.set()
             voice = Speech(word, language)
@@ -119,32 +99,58 @@ class Game(QObject):
         else:
             _play()
             
-    def _initWordVector(self, dictionary):
-        vector = list(self.dictionary[dictionary][self.fromLanguage][self.toLanguage].keys())
-        self.wordVector = {dictionary:{self.fromLanguage:{self.toLanguage:vector}}}
-    
     def getWords(self, dictionary, fromLanguage=None, toLanguage=None):
-        if fromLanguage is None: fromLanguage = self.fromLanguage
-        if toLanguage is None: toLanguage = self.toLanguage
-        
+        if fromLanguage is None: fromLanguage = self.fromLanguage()
+        if toLanguage is None: toLanguage = self.toLanguage()
         return self.dictionary[dictionary][fromLanguage][toLanguage]
     
     def switchLanguage(self):
-        self.fromLanguage, self.toLanguage = self.toLanguage, self.fromLanguage
+        toLaguage, fromLanguage = self.toLanguage(), self.fromLanguage()
+        self.setToLanguage(fromLanguage)
+        self.setFromLanguage(toLaguage)
         self.onLanguageSwitch.emit()
 
     def addDictionary(self, dictionary):
         if self.dictionary.get(dictionary) is None:
             self.dictionary[dictionary] = {}
-            self.dictionary[dictionary][self.fromLanguage] = {}
-            self.dictionary[dictionary][self.fromLanguage][self.toLanguage] = {}
+            self.dictionary[dictionary][self.fromLanguage()] = {}
+            self.dictionary[dictionary][self.fromLanguage()][self.toLanguage()] = {}
                 
-            self.updateDictionaryFile()
+            self.dictionary.updateFile()
             self.onDictionaryAdd.emit(dictionary)
     
     def removeDictionary(self, dictionary):
         if self.dictionary.get(dictionary) is None: return
         
-        del self.dictionary[dictionary][self.fromLanguage]
+        del self.dictionary[dictionary][self.fromLanguage()]
         self.onDictionaryRemove.emit(dictionary)
-        self.updateDictionaryFile()
+        self.dictionary.updateFile()
+    
+    def moveWord(self, words, fromDictionary, toDictionary, fromLanguage=None, toLanguage=None):
+        if not isinstance(words, (tuple, list)):
+            words = [words]
+        if fromLanguage is None: fromLanguage = self.fromLanguage()
+        if toLanguage is None: toLanguage = self.toLanguage()
+        
+        dictionary = self.dictionary[fromDictionary][fromLanguage][toLanguage]
+        
+        for word in words:
+            translation = dictionary[word]
+            del dictionary[word]
+            self.dictionary[toDictionary][fromLanguage][toLanguage][word] = translation
+            
+        self.dictionary.updateFile()
+        self.onWordMove.emit(words, fromDictionary, toDictionary, fromLanguage, toLanguage)
+    
+    
+    def fromLanguage(self):
+        return self.dictionary.fromLanguage
+    
+    def toLanguage(self):
+        return self.dictionary.toLanguage
+    
+    def setFromLanguage(self, language):
+        self.dictionary.fromLanguage = language
+        
+    def setToLanguage(self, language):
+        self.dictionary.toLanguage = language

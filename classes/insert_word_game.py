@@ -3,7 +3,6 @@ from WordGame.classes.game import Game
 
 class InsertWordGame(Game):
     
-    def __init__(self, fromLanguage, toLanguage):
-        Game.__init__(self, fromLanguage, toLanguage)
-        
+    def __init__(self, dictionary):
+        Game.__init__(self, dictionary)
         self.graphicView = InsertWordView(self)

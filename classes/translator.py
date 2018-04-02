@@ -14,13 +14,17 @@ class Translated():
     def __init__(self, dest, data):
         self.translations = []
         self.text = data[0][0][0]
-        self.wordClass = data[1][0][0]
+        if data[1] is not None:
+            self.wordClass = data[1][0][0]
+            
+            for d in data[1]:
+                if dest == "de" and d[0] == "Substantiv":
+                    self.translations.append((d[0], ["%s %s" % (d[2][0][-1], w) for w in d[1]]))
+                else:
+                    self.translations.append((d[0], d[1]))
+        else:
+            self.translations.append(("word", [data[0][0][0]]))
         
-        for d in data[1]:
-            if dest == "de" and d[0] == "Substantiv":
-                self.translations.append((d[0], ["%s %s" % (d[2][0][-1], w) for w in d[1]]))
-            else:
-                self.translations.append((d[0], d[1]))
 
 class TranslatedSentence():
     

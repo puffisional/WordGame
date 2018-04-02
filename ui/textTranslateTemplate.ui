@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1510</width>
+    <width>1688</width>
     <height>688</height>
    </rect>
   </property>
@@ -67,6 +67,16 @@
       <widget class="QCheckBox" name="readOriginalCheckbox">
        <property name="text">
         <string>Read original</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="translateWordsCheckbox">
+       <property name="text">
+        <string>Translate words</string>
        </property>
        <property name="checked">
         <bool>true</bool>

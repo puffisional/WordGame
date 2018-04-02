@@ -3,7 +3,7 @@
 from classes.graphic_view import GraphicView
 from WordGame.ui.insertWordTemplate import Ui_Form
 from PyQt5.Qt import pyqtSlot, QApplication
-from PyQt5.QtWidgets import QLabel, QLineEdit, QPushButton, QWidget, QHBoxLayout,\
+from PyQt5.QtWidgets import QLabel, QLineEdit, QPushButton, QWidget, QHBoxLayout, \
     QSpacerItem, QSizePolicy
 from PyQt5 import QtCore
 
@@ -36,11 +36,11 @@ class InsertWordView(Ui_Form, GraphicView):
     @pyqtSlot()   
     def playWord(self):
         word = self.wordInput.text()
-        self.game.sayWord(word, self.game.fromLanguage)
+        self.game.sayWord(word, self.game.fromLanguage())
     
     @pyqtSlot('QString')
     def playTranslation(self, word):
-        self.game.sayWord(word, self.game.toLanguage)
+        self.game.sayWord(word, self.game.toLanguage())
     
     @pyqtSlot()
     def saveWord(self):
@@ -69,7 +69,7 @@ class InsertWordView(Ui_Form, GraphicView):
     
     def _addTranslatedWord(self, row, wordType, translations):
         label = QLabel("%s:" % wordType)
-        label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        label.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
         inputTranslation = QWidget()
         inputTranslation.setLayout(QHBoxLayout())
         inputTranslation.layout().setContentsMargins(0, 0, 0, 0)
