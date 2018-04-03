@@ -83,7 +83,7 @@ class DictionaryEditView(Ui_Form, GraphicView):
     
     @pyqtSlot('int', 'int') 
     def sayWord(self, row, column):
-        language = (self.game.fromLanguage, self.game.toLanguage)[column]
+        language = (self.game.fromLanguage(), self.game.toLanguage())[column]
         word = self.dictionaryTable.cellWidget(row, column).text()
         
         self.game.sayWord(word, language)

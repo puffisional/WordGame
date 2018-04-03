@@ -45,7 +45,8 @@ class TextTranslateGame(Game):
                     translation = self.translate(word, blocking=True)
                     if translation is None: continue
                     
-                    self.insertWord(word, translation.translations[0][1][0], DICT_UNKNOWN)
+                    if not self.isWordKnown(word):
+                        self.insertWord(word, translation.translations[0][1][0], DICT_UNKNOWN)
                 
             self.stopEvent.clear()
         

@@ -4,6 +4,7 @@ from PyQt5.Qt import QObject, pyqtSignal
 from threading import Event, Thread
 from classes.translator import Translator, TranslatedSentence
 from builtins import isinstance
+from classes.language_dictionary import DICT_UNKNOWN
 
 Speech.MAX_SEGMENT_SIZE = 200
 
@@ -76,7 +77,17 @@ class Game(QObject):
         
         self.dictionary[dictionary][fromLanguage][toLanguage][word] = translation
         self.dictionary.updateFile()
+    
+    def isWordKnown(self, word, fromLanguage=None, toLanguage=None):
+        if fromLanguage is None: fromLanguage = self.fromLanguage()
+        if toLanguage is None: toLanguage = self.toLanguage()
         
+        for dictionary in self.dictionary:
+            if dictionary == DICT_UNKNOWN: continue
+            if word in self.dictionary[dictionary][fromLanguage][toLanguage]: return True
+            
+        return False
+       
     def randomWord(self, dictionary, language):
         fromWord = random.choice(self.wordVector[dictionary][self.fromLanguage()][self.toLanguage()])
         if language == self.fromLanguage():
@@ -88,6 +99,7 @@ class Game(QObject):
         return word == quess
     
     def sayWord(self, word, language, blocking=False):
+
         def _play():
             self.voicePlayEvent.set()
             voice = Speech(word, language)
@@ -141,7 +153,6 @@ class Game(QObject):
             
         self.dictionary.updateFile()
         self.onWordMove.emit(words, fromDictionary, toDictionary, fromLanguage, toLanguage)
-    
     
     def fromLanguage(self):
         return self.dictionary.fromLanguage
